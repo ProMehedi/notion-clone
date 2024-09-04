@@ -7,6 +7,20 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Notion Clone',
   description: 'A Notion clone built with Next.js and Tailwind CSS',
+  icons: {
+    icon: [
+      {
+        media: '(prefers-color-scheme: light)',
+        url: '/logo.svg',
+        href: '/logo.svg',
+      },
+      {
+        media: '(prefers-color-scheme: dark)',
+        url: '/logo-dark.svg',
+        href: '/logo-dark.svg',
+      },
+    ],
+  },
 }
 
 const RootLayout = ({
