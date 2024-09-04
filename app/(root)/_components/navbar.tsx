@@ -3,6 +3,7 @@
 import { cn } from '~/lib/utils'
 import { useScrollTop } from '~/hooks/use-scroll-top'
 import { Button } from '~/components/ui/button'
+import ModeToggle from '~/components/mode-toggle'
 //
 import Logo from './logo'
 
@@ -21,6 +22,7 @@ const Navbar = () => {
       <div className='md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2'>
         <Button variant='link'>Sign In</Button>
         <Button size='sm'>Get Started free</Button>
+        <ModeToggle />
       </div>
     </div>
   )

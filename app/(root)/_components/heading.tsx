@@ -1,5 +1,5 @@
 'use client'
-import { ArrowRightIcon } from '@radix-ui/react-icons'
+import { ArrowRight } from 'lucide-react'
 //
 import { Button } from '~/components/ui/button'
 
@@ -15,7 +15,7 @@ const Heading = () => {
       </h3>
       <Button>
         Enter Notion
-        <ArrowRightIcon className='w-4 h-4 ml-2' />
+        <ArrowRight className='w-4 h-4 ml-2' />
       </Button>
     </div>
   )
