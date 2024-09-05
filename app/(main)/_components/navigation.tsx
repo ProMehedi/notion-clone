@@ -13,6 +13,7 @@ import { Button } from '~/components/ui/button'
 //
 import UserItem from './user-item'
 import Item from './item'
+import DocumentList from './document-list'
 
 const Navigation = () => {
   const path = usePathname()
@@ -144,12 +145,7 @@ const Navigation = () => {
         </div>
 
         <div className='mt-4'>
-          {documents &&
-            documents?.map((document) => (
-              <div key={document._id} className='p-2'>
-                <p>{document.title}</p>
-              </div>
-            ))}
+          <DocumentList />
         </div>
 
         <div
