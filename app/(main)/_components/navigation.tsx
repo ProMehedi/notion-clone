@@ -3,15 +3,19 @@ import React from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { usePathname } from 'next/navigation'
 import { ChevronsLeft, MenuIcon } from 'lucide-react'
+import { useQuery } from 'convex/react'
 //
 import { cn } from '~/lib/utils'
 import { Button } from '~/components/ui/button'
 //
 import UserItem from './user-item'
+// Convex
+import { api } from '~/convex/_generated/api'
 
 const Navigation = () => {
   const path = usePathname()
   const isMobile = useMediaQuery('(max-width: 768px)')
+  const documents = useQuery(api.documents.getAll)
 
   const [isResetting, setIsResetting] = React.useState(false)
   const [isCollapsed, setIsCollapsed] = React.useState(isMobile)
@@ -125,7 +129,12 @@ const Navigation = () => {
         </div>
 
         <div className='mt-4'>
-          <p>Documents</p>
+          {documents &&
+            documents?.map((document) => (
+              <div key={document._id} className='p-2'>
+                <p>{document.title}</p>
+              </div>
+            ))}
         </div>
 
         <div

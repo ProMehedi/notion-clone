@@ -1,7 +1,8 @@
 import { v } from 'convex/values'
 //
-import { mutation } from './_generated/server'
+import { mutation, query } from './_generated/server'
 
+// Create a new document
 export const create = mutation({
   args: {
     title: v.string(),
@@ -22,5 +23,19 @@ export const create = mutation({
     })
 
     return document
+  },
+})
+
+// Get all documents
+export const getAll = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) throw new Error('Unauthenticated')
+
+    const userId = identity.subject
+
+    const documents = await ctx.db.query('documents').collect()
+
+    return documents
   },
 })
