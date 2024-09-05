@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 //
 import ThemeProvider from '~/providers/theme-provider'
+import ConvexClientProvider from '~/providers/convex-provider'
 //
 import './globals.css'
 
@@ -34,14 +35,16 @@ const RootLayout = ({
   return (
     <html lang='en' suppressContentEditableWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          storageKey='theme'
-        >
-          {children}
-        </ThemeProvider>
+        <ConvexClientProvider>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+            enableSystem
+            storageKey='theme'
+          >
+            {children}
+          </ThemeProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   )
