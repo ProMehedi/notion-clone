@@ -6,6 +6,8 @@ import { ChevronsLeft, MenuIcon } from 'lucide-react'
 //
 import { cn } from '~/lib/utils'
 import { Button } from '~/components/ui/button'
+//
+import UserItem from './user-item'
 
 const Navigation = () => {
   const path = usePathname()
@@ -119,7 +121,7 @@ const Navigation = () => {
         </Button>
 
         <div className=''>
-          <p>Actions items</p>
+          <UserItem />
         </div>
 
         <div className='mt-4'>
