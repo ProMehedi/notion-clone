@@ -10,7 +10,7 @@ export const create = mutation({
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
-    if (!identity) throw new Error('Unauthenticated')
+    if (!identity) throw new Error('Not authenticated')
 
     const userId = identity.subject
 
@@ -30,11 +30,33 @@ export const create = mutation({
 export const getAll = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity()
-    if (!identity) throw new Error('Unauthenticated')
+    if (!identity) throw new Error('Not authenticated')
 
     const userId = identity.subject
 
     const documents = await ctx.db.query('documents').collect()
+
+    return documents
+  },
+})
+
+// Get sidebar documents
+export const getSidebar = query({
+  args: { parentDocument: v.optional(v.id('documents')) },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) throw new Error('Not authenticated')
+
+    const userId = identity.subject
+
+    const documents = await ctx.db
+      .query('documents')
+      .withIndex('by_user_parent', (q) =>
+        q.eq('userId', userId).eq('parentDocument', args.parentDocument)
+      )
+      .filter((doc) => doc.eq(doc.field('isArchived'), false))
+      .order('desc')
+      .collect()
 
     return documents
   },
