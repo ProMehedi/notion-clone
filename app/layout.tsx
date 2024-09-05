@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 //
 import ThemeProvider from '~/providers/theme-provider'
 import ConvexClientProvider from '~/providers/convex-provider'
+import { Toaster } from '~/components/ui/sonner'
 //
 import './globals.css'
 
@@ -42,6 +43,7 @@ const RootLayout = ({
             enableSystem
             storageKey='theme'
           >
+            <Toaster position='bottom-center' />
             {children}
           </ThemeProvider>
         </ConvexClientProvider>
