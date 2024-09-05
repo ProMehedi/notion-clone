@@ -1,21 +1,24 @@
 'use client'
 import React from 'react'
+import { toast } from 'sonner'
 import { useMediaQuery } from 'usehooks-ts'
 import { usePathname } from 'next/navigation'
 import { ChevronsLeft, MenuIcon } from 'lucide-react'
-import { useQuery } from 'convex/react'
+// Convex
+import { useQuery, useMutation } from 'convex/react'
+import { api } from '~/convex/_generated/api'
 //
 import { cn } from '~/lib/utils'
 import { Button } from '~/components/ui/button'
 //
 import UserItem from './user-item'
-// Convex
-import { api } from '~/convex/_generated/api'
+import Item from './item'
 
 const Navigation = () => {
   const path = usePathname()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const documents = useQuery(api.documents.getAll)
+  const create = useMutation(api.documents.create)
 
   const [isResetting, setIsResetting] = React.useState(false)
   const [isCollapsed, setIsCollapsed] = React.useState(isMobile)
@@ -102,6 +105,15 @@ const Navigation = () => {
     }
   }
 
+  const handleCreate = () => {
+    const promise = create({ title: 'Untitled' })
+    toast.promise(promise, {
+      loading: 'Creating a new note...',
+      success: 'New Note created successfully',
+      error: 'Failed to create new note',
+    })
+  }
+
   return (
     <>
       <aside
@@ -126,6 +138,9 @@ const Navigation = () => {
 
         <div className=''>
           <UserItem />
+          <Item isSearch label='Search' icon='Search' onClick={() => {}} />
+          <Item label='Settings' icon='Settings' onClick={() => {}} />
+          <Item label='New page' icon='CirclePlus' onClick={handleCreate} />
         </div>
 
         <div className='mt-4'>
