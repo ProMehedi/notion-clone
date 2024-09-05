@@ -1,4 +1,7 @@
 'use client'
+import Link from 'next/link'
+import { useConvexAuth } from 'convex/react'
+import { SignInButton, UserButton } from '@clerk/clerk-react'
 
 import { cn } from '~/lib/utils'
 import { useScrollTop } from '~/hooks/use-scroll-top'
@@ -9,6 +12,7 @@ import Logo from './logo'
 
 const Navbar = () => {
   const scrolled = useScrollTop()
+  const { isAuthenticated, isLoading } = useConvexAuth()
 
   return (
     <div
@@ -20,8 +24,32 @@ const Navbar = () => {
       <Logo />
 
       <div className='md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2'>
-        <Button variant='link'>Sign In</Button>
-        <Button size='sm'>Get Started free</Button>
+        {isLoading && (
+          <>
+            <div className='animate-pulse bg-gray-300 dark:bg-gray-700 h-4 w-14 rounded' />
+            <div className='animate-pulse bg-gray-300 dark:bg-gray-700 h-8 w-32 rounded' />
+          </>
+        )}
+
+        {!isLoading && !isAuthenticated && (
+          <>
+            <SignInButton mode='modal'>
+              <Button variant='link'>Sign In</Button>
+            </SignInButton>
+            <SignInButton mode='modal'>
+              <Button size='sm'>Get Started free</Button>
+            </SignInButton>
+          </>
+        )}
+
+        {!isLoading && isAuthenticated && (
+          <>
+            <Button size='sm' asChild>
+              <Link href='/dashboard'>Notion Dashboard</Link>
+            </Button>
+            <UserButton afterSwitchSessionUrl='/' />
+          </>
+        )}
         <ModeToggle />
       </div>
     </div>
