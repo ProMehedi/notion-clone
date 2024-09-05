@@ -1,12 +1,17 @@
 'use client'
 import React from 'react'
+import { toast } from 'sonner'
 import { useParams, useRouter } from 'next/navigation'
 // Convex
 import { Doc, Id } from '~/convex/_generated/dataModel'
-import { useQuery } from 'convex/react'
+import { useMutation, useQuery } from 'convex/react'
 import { api } from '~/convex/_generated/api'
-import Item from './item'
+// Components
 import { cn } from '~/lib/utils'
+import { Button } from '~/components/ui/button'
+import Icon from '~/components/icon'
+//
+import Item from './item'
 
 interface Props {
   parenDocumentId?: Id<'documents'>
@@ -16,10 +21,12 @@ interface Props {
 
 const DocumentList = ({ parenDocumentId, level = 0, data }: Props) => {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({})
+  const [notFound, setNotFound] = React.useState(false)
 
   const params = useParams()
   const router = useRouter()
 
+  const create = useMutation(api.documents.create)
   const documents = useQuery(api.documents.getSidebar, {
     parentDocument: parenDocumentId,
   })
@@ -32,7 +39,54 @@ const DocumentList = ({ parenDocumentId, level = 0, data }: Props) => {
     router.push(`/documents/${id}`)
   }
 
-  if (documents === undefined) return <Item.Skeleton level={level} />
+  React.useEffect(() => {
+    if (documents === undefined) return
+    if (documents && documents.length === 0 && parenDocumentId === undefined) {
+      setNotFound(true)
+    }
+    if (documents && documents.length !== 0) {
+      setNotFound(false)
+    }
+  }, [documents, parenDocumentId])
+
+  const handleCreate = () => {
+    const promise = create({ title: 'Untitled' })
+    toast.promise(promise, {
+      loading: 'Creating new note...',
+      success: 'new Note created successfully',
+      error: 'Failed to create note',
+    })
+  }
+
+  if (documents === undefined) {
+    if (parenDocumentId === undefined) {
+      return (
+        <>
+          <Item.Skeleton level={level} />
+          <Item.Skeleton level={level} />
+          <Item.Skeleton level={level} />
+        </>
+      )
+    } else {
+      return <Item.Skeleton level={level} />
+    }
+  }
+
+  if (notFound) {
+    return (
+      <div className='flex flex-col space-y-3 items-center p-3'>
+        <p className='text-sm font-medium text-muted-foreground/80 text-center'>
+          You don't have any documents
+          <br />
+          Let's create one!
+        </p>
+        <Button className='ml-2' size='sm' onClick={handleCreate}>
+          <Icon name='CirclePlus' className='h-4 mr-2' />
+          Create
+        </Button>
+      </div>
+    )
+  }
 
   return (
     <>
