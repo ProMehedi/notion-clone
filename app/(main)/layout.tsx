@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react'
 import { useConvexAuth } from 'convex/react'
 import { Loader } from 'lucide-react'
 import { redirect } from 'next/navigation'
+import Navigation from './_components/navigation'
 
 const DashboardLayout = ({ children }: PropsWithChildren) => {
   const { isAuthenticated, isLoading } = useConvexAuth()
@@ -20,6 +21,7 @@ const DashboardLayout = ({ children }: PropsWithChildren) => {
 
   return (
     <div className='h-full flex dark:bg-[#f1f1f1]'>
+      <Navigation />
       <main className='flex-1 h-full overflow-y-auto'>{children}</main>
     </div>
   )
