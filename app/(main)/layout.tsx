@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 // Convex
 import { useConvexAuth } from 'convex/react'
 // Components
+import ModalProvider from '~/providers/modal-provider'
 import SearchCommand from '~/components/search-command'
 import Navigation from './_components/navigation'
 
@@ -26,6 +27,7 @@ const DashboardLayout = ({ children }: PropsWithChildren) => {
     <div className='h-full flex dark:bg-secondary/50'>
       <Navigation />
       <main className='flex-1 h-full overflow-y-auto'>
+        <ModalProvider />
         <SearchCommand />
         {children}
       </main>
