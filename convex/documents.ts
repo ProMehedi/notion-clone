@@ -205,11 +205,11 @@ export const getSearch = query({
 
 // Get a document by ID
 export const getById = query({
-  args: { docId: v.id('documents') },
+  args: { id: v.id('documents') },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
 
-    const document = await ctx.db.get(args.docId)
+    const document = await ctx.db.get(args.id)
     if (!document) throw new Error('Document not found')
 
     if (!document.isArchived && document.isPublished) {

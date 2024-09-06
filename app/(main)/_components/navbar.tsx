@@ -21,7 +21,7 @@ const Navbar = ({ isCollapsed, onResetWidth }: Props) => {
   const params = useParams()
 
   const document = useQuery(api.documents.getById, {
-    docId: params.docId as Id<'documents'>,
+    id: params.docId as Id<'documents'>,
   })
 
   // Skeleton loading
