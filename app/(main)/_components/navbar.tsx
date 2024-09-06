@@ -41,7 +41,7 @@ const Navbar = ({ isCollapsed, onResetWidth }: Props) => {
 
   return (
     <>
-      <nav className='w-full flex items-center gap-x-4 px-3 py-2 bg-white dark:bg-[#1e1e1e]'>
+      <nav className='w-full flex items-center gap-x-4 px-3 py-2 bg-white dark:bg-[#1f1f1f]'>
         {isCollapsed ? (
           <Icon
             className='text-muted-foreground'
