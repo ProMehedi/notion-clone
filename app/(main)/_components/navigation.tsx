@@ -2,7 +2,7 @@
 import React from 'react'
 import { toast } from 'sonner'
 import { useMediaQuery } from 'usehooks-ts'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ChevronsLeft, MenuIcon } from 'lucide-react'
 // Convex
 import { useQuery, useMutation } from 'convex/react'
@@ -24,8 +24,8 @@ import { useSearch } from '~/hooks/use-search'
 
 const Navigation = () => {
   const path = usePathname()
+  const router = useRouter()
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const documents = useQuery(api.documents.getAll)
   const create = useMutation(api.documents.create)
   const openSearchDialog = useSearch((state) => state.onOpen)
 
@@ -153,7 +153,11 @@ const Navigation = () => {
             icon='Search'
             onClick={openSearchDialog}
           />
-          <Item label='Settings' icon='Settings' onClick={() => {}} />
+          <Item
+            label='Settings'
+            icon='Settings'
+            onClick={() => router.push('/settings')}
+          />
           <Item label='New page' icon='CirclePlus' onClick={handleCreate} />
         </div>
 

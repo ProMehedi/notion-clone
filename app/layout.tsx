@@ -43,7 +43,7 @@ const RootLayout = ({
             enableSystem
             storageKey='theme'
           >
-            <Toaster position='bottom-center' />
+            <Toaster richColors closeButton position='bottom-center' />
             {children}
           </ThemeProvider>
         </ConvexClientProvider>
