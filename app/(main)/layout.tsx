@@ -24,7 +24,7 @@ const DashboardLayout = ({ children }: PropsWithChildren) => {
   }
 
   return (
-    <div className='h-full flex dark:bg-secondary/50'>
+    <div className='h-full flex dark:bg-[#1e1e1e]'>
       <Navigation />
       <main className='flex-1 h-full overflow-y-auto'>
         <ModalProvider />
