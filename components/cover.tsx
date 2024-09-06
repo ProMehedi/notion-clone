@@ -1,11 +1,17 @@
 'use client'
-import Image from 'next/image'
 import React from 'react'
-//
-import { cn } from '~/lib/utils'
-import { Button } from './ui/button'
-import Icon from './icon'
+import Image from 'next/image'
+import { toast } from 'sonner'
+import { useParams } from 'next/navigation'
+// Convex
+import { useMutation } from 'convex/react'
+import { api } from '~/convex/_generated/api'
+import { Id } from '~/convex/_generated/dataModel'
+// Components
 import { useCoverImage } from '~/hooks/use-cover-image'
+import { cn } from '~/lib/utils'
+import { Button } from '~/components/ui/button'
+import Icon from '~/components/icon'
 
 interface Props {
   url?: string
@@ -14,6 +20,18 @@ interface Props {
 
 const Cover = ({ url, preview }: Props) => {
   const { onOpen } = useCoverImage()
+  const params = useParams() as { docId: Id<'documents'> }
+  const removeCoverImage = useMutation(api.documents.removeCoverImage)
+
+  const onRemove = () => {
+    const promise = removeCoverImage({ id: params.docId })
+
+    toast.promise(promise, {
+      loading: 'Removing cover image...',
+      success: 'Cover image removed',
+      error: 'Failed to remove cover image',
+    })
+  }
 
   return (
     <div
@@ -45,7 +63,7 @@ const Cover = ({ url, preview }: Props) => {
             Change cover
           </Button>
           <Button
-            // onClick={coverImage.onOpen}
+            onClick={onRemove}
             className='text-muted-foreground text-xs'
             variant='outline'
             size='sm'
