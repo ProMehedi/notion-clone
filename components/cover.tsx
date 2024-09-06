@@ -20,7 +20,7 @@ interface Props {
 }
 
 const Cover = ({ url, preview }: Props) => {
-  const { onOpen } = useCoverImage()
+  const { onReplace } = useCoverImage()
   const { edgestore } = useEdgeStore()
   const params = useParams() as { docId: Id<'documents'> }
   const removeCoverImage = useMutation(api.documents.removeCoverImage)
@@ -62,7 +62,7 @@ const Cover = ({ url, preview }: Props) => {
       {url && !preview && (
         <div className='opacity-0 group-hover:opacity-100 absolute bottom-5 right-5 flex items-center gap-x-2'>
           <Button
-            onClick={onOpen}
+            onClick={() => onReplace(url)}
             className='text-muted-foreground text-xs'
             variant='outline'
             size='sm'

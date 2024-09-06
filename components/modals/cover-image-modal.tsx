@@ -18,7 +18,7 @@ const CoverImageModal = () => {
 
   const params = useParams() as { docId: Id<'documents'> }
   const { edgestore } = useEdgeStore()
-  const { onClose, isOpen } = useCoverImage()
+  const coverImage = useCoverImage()
   const update = useMutation(api.documents.update)
 
   const onChange = async (file: File | undefined) => {
@@ -27,16 +27,20 @@ const CoverImageModal = () => {
     setFile(file)
     setIsUploading(true)
 
-    const { url } = await edgestore.publicFiles.upload({ file })
-    await update({ id: params.docId, coverImage: url })
+    const res = await edgestore.publicFiles.upload({
+      file,
+      options: { replaceTargetUrl: coverImage.url },
+    })
+
+    await update({ id: params.docId, coverImage: res.url })
 
     setFile(undefined)
     setIsUploading(false)
-    onClose()
+    coverImage.onClose()
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={coverImage.isOpen} onOpenChange={coverImage.onClose}>
       <DialogContent>
         <DialogHeader>
           <h2 className='text-lg text-center font-semibold -mb-2'>
