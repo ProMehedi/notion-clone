@@ -202,3 +202,53 @@ export const getSearch = query({
     return documents
   },
 })
+
+// Get a document by ID
+export const getById = query({
+  args: { docId: v.id('documents') },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+
+    const document = await ctx.db.get(args.docId)
+    if (!document) throw new Error('Document not found')
+
+    if (!document.isArchived && document.isPublished) {
+      return document
+    }
+
+    if (!identity) throw new Error('Not authenticated')
+
+    const userId = identity.subject
+    if (document.userId !== userId) throw new Error('Not authenticated')
+
+    return document
+  },
+})
+
+// Update a document
+export const update = mutation({
+  args: {
+    id: v.id('documents'),
+    title: v.optional(v.string()),
+    content: v.optional(v.string()),
+    coverImage: v.optional(v.string()),
+    icon: v.optional(v.string()),
+    isPublished: v.optional(v.boolean()),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) throw new Error('Not authenticated')
+
+    const userId = identity.subject
+    const { id, ...rest } = args
+
+    const document = await ctx.db.get(id)
+    if (!document) throw new Error('Document not found')
+
+    if (document.userId !== userId) throw new Error('Not authenticated')
+
+    const newDoc = await ctx.db.patch(args.id, { ...rest })
+
+    return newDoc
+  },
+})
