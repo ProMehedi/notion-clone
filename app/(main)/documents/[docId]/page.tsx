@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import dynamic from 'next/dynamic'
 // Convex
 import { useMutation, useQuery } from 'convex/react'
 import { api } from '~/convex/_generated/api'
@@ -8,13 +9,16 @@ import { Id } from '~/convex/_generated/dataModel'
 import Cover from '~/components/cover'
 import Toolbar from '~/components/toolbar'
 import { Skeleton } from '~/components/ui/skeleton'
-import Editor from '~/components/editor'
 
 interface Props {
   params: { docId: Id<'documents'> }
 }
 
 const SingleDoc = ({ params }: Props) => {
+  const Editor = React.useMemo(
+    () => dynamic(() => import('~/components/editor'), { ssr: false }),
+    []
+  )
   const document = useQuery(api.documents.getById, { id: params.docId })
   const update = useMutation(api.documents.update)
 
