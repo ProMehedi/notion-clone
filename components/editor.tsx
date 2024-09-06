@@ -8,11 +8,12 @@ import '@blocknote/mantine/style.css'
 import { useEdgeStore } from '~/lib/edgestore'
 
 interface Props {
+  preview?: boolean
   onChange: (value: string) => void
   initialData: any
 }
 
-const Editor = ({ initialData, onChange }: Props) => {
+const Editor = ({ preview, initialData, onChange }: Props) => {
   const [theme, setTheme] = React.useState<'light' | 'dark'>('light')
 
   const { resolvedTheme } = useTheme()
@@ -38,7 +39,7 @@ const Editor = ({ initialData, onChange }: Props) => {
   return (
     <div>
       <BlockNoteView
-        editable
+        editable={!preview}
         editor={editor}
         theme={theme}
         onChange={() => {
