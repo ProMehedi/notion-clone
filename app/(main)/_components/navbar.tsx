@@ -22,13 +22,20 @@ const Navbar = ({ isCollapsed, onResetWidth }: Props) => {
     docId: params.docId as Id<'documents'>,
   })
 
-  if (document === undefined) return <div>Loading...</div>
+  // Skeleton loading
+  if (document === undefined) {
+    return (
+      <nav className='w-full flex items-center gap-x-4 px-3 py-2'>
+        <Title.Skeleton />
+      </nav>
+    )
+  }
 
   if (document === null) return <div>Document not found</div>
 
   return (
     <>
-      <nav className='w-full flex items-center gap-x-4 bg-background dark:bg-secondary/50'>
+      <nav className='w-full flex items-center gap-x-4 px-3 py-2'>
         {isCollapsed ? (
           <Icon
             className='text-muted-foreground'

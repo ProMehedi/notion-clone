@@ -6,6 +6,7 @@ import { api } from '~/convex/_generated/api'
 import { Doc } from '~/convex/_generated/dataModel'
 import { Input } from '~/components/ui/input'
 import { Button } from '~/components/ui/button'
+import { Skeleton } from '~/components/ui/skeleton'
 
 interface Props {
   initialData: Doc<'documents'>
@@ -13,7 +14,7 @@ interface Props {
 
 const Title = ({ initialData }: Props) => {
   const [isEditing, setIsEditing] = React.useState(false)
-  const [title, setTitle] = React.useState(initialData.title || 'Untitled')
+  const [title, setTitle] = React.useState(initialData?.title || 'Untitled')
 
   const inputRef = React.useRef<HTMLInputElement>(null)
   const update = useMutation(api.documents.update)
@@ -40,7 +41,7 @@ const Title = ({ initialData }: Props) => {
 
   return (
     <div className='flex items-center gap-x-1'>
-      {!!initialData.icon && <p>{initialData.icon}</p>}
+      {!!initialData?.icon && <p>{initialData.icon}</p>}
       {isEditing ? (
         <Input
           ref={inputRef}
@@ -64,5 +65,7 @@ const Title = ({ initialData }: Props) => {
     </div>
   )
 }
+
+Title.Skeleton = () => <Skeleton className='h-4 w-16 rounded-sm' />
 
 export default Title
