@@ -6,9 +6,10 @@ import { useParams, useRouter } from 'next/navigation'
 import { useMutation, useQuery } from 'convex/react'
 import { api } from '~/convex/_generated/api'
 import { Id } from '~/convex/_generated/dataModel'
+// Components
 import Icon from '~/components/icon'
 import { Input } from '~/components/ui/input'
-import Link from 'next/link'
+import { Skeleton } from '~/components/ui/skeleton'
 import ConfirmModal from '~/components/modals/confirm-modal'
 
 const TrashBox = () => {
@@ -50,7 +51,20 @@ const TrashBox = () => {
     if (params.docId === id) router.push('/')
   }
 
-  if (documents === undefined) return <div>Loading...</div>
+  // Skeleton loading
+  if (documents === undefined)
+    return (
+      <div className='text-sm'>
+        <div className='flex items-center gap-x-1 p-2'>
+          <Skeleton className='w-7 h-7' />
+          <Skeleton className='h-7 flex-1 ml-2' />
+        </div>
+        <div className='mt-2 px-1 pb-1 space-y-1'>
+          <Skeleton className='h-7' />
+          <Skeleton className='h-7' />
+        </div>
+      </div>
+    )
 
   return (
     <div className='text-sm'>
@@ -58,7 +72,7 @@ const TrashBox = () => {
         <Icon name='Search' size={16} />
         <Input
           className='h-7 px-2 focus-visible:ring-transparent bg-secondary'
-          placeholder='Search by page title...'
+          placeholder='Search by title...'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

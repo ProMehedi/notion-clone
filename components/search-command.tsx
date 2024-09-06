@@ -62,7 +62,7 @@ const SearchCommand = () => {
               key={doc._id}
               value={`${doc._id} - ${doc.title}`}
               title={doc.title}
-              onSelect={handleSelect}
+              onSelect={() => handleSelect(doc._id)}
             >
               {doc.icon ? (
                 <p className='mr-2 text-[18px]'>{doc.icon}</p>
