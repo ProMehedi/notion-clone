@@ -1,7 +1,9 @@
 'use client'
 
+import React from 'react'
 import { z } from 'zod'
 import { toast } from 'sonner'
+import { useTheme } from 'next-themes'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
@@ -33,16 +35,26 @@ type AppearanceFormValues = z.infer<typeof appearanceFormSchema>
 
 // This can come from your database or API.
 const defaultValues: Partial<AppearanceFormValues> = {
-  theme: 'light',
+  font: 'inter',
 }
 
 export function AppearanceForm() {
+  const { setTheme, resolvedTheme } = useTheme()
+  console.log(resolvedTheme)
+
   const form = useForm<AppearanceFormValues>({
     resolver: zodResolver(appearanceFormSchema),
     defaultValues,
   })
 
+  React.useEffect(() => {
+    if (resolvedTheme) {
+      form.setValue('theme', resolvedTheme as AppearanceFormValues['theme'])
+    }
+  }, [resolvedTheme, form])
+
   function onSubmit(data: AppearanceFormValues) {
+    setTheme(data.theme)
     toast.success('Appearance updated successfully.')
   }
 
@@ -80,6 +92,7 @@ export function AppearanceForm() {
         />
         <FormField
           control={form.control}
+          defaultValue={resolvedTheme as AppearanceFormValues['theme']}
           name='theme'
           render={({ field }) => (
             <FormItem className='space-y-1'>
@@ -98,7 +111,7 @@ export function AppearanceForm() {
                     <FormControl>
                       <RadioGroupItem value='light' className='sr-only' />
                     </FormControl>
-                    <div className='items-center rounded-md border-2 border-muted p-1 hover:border-accent'>
+                    <div className='items-center rounded-md border-2 border-muted p-1 hover:border-accent dark:hover:border-accent-foreground'>
                       <div className='space-y-2 rounded-sm bg-[#ecedef] p-2'>
                         <div className='space-y-2 rounded-md bg-white p-2 shadow-sm'>
                           <div className='h-2 w-[80px] rounded-lg bg-[#ecedef]' />
