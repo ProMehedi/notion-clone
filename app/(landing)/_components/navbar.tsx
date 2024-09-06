@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useConvexAuth } from 'convex/react'
-import { SignInButton, UserButton } from '@clerk/clerk-react'
+import { SignInButton, UserButton, useUser } from '@clerk/clerk-react'
 
 import { cn } from '~/lib/utils'
 import { useScrollTop } from '~/hooks/use-scroll-top'
@@ -12,6 +12,7 @@ import Logo from './logo'
 
 const Navbar = () => {
   const scrolled = useScrollTop()
+  const { user } = useUser()
   const { isAuthenticated, isLoading } = useConvexAuth()
 
   return (
@@ -45,7 +46,7 @@ const Navbar = () => {
         {!isLoading && isAuthenticated && (
           <>
             <Button size='sm' asChild>
-              <Link href='/dashboard'>Notion Dashboard</Link>
+              <Link href='/documents'>{user?.firstName}&apos;s Documents</Link>
             </Button>
             <UserButton afterSwitchSessionUrl='/' />
           </>

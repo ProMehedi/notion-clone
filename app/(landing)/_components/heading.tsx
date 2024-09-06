@@ -30,7 +30,7 @@ const Heading = () => {
       )}
       {!isLoading && isAuthenticated && (
         <Button size='sm' asChild>
-          <Link href='/dashboard'>
+          <Link href='/documents'>
             Enter Notion
             <ArrowRight className='w-4 h-4 ml-2' />
           </Link>

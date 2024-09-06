@@ -90,7 +90,7 @@ const Item = ({ level = 0, ...props }: ItemProps) => {
         <div
           role='button'
           title='Expand'
-          className='h-full rounded-sm hover:bg-neutral-300 dark:bg-neutral-600 mr-1 select-none'
+          className='h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1 select-none'
           onClick={handleExpand}
         >
           <Icon

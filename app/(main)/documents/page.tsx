@@ -1,14 +1,14 @@
 'use client'
 import React from 'react'
 import Image from 'next/image'
+import { toast } from 'sonner'
 import { useUser } from '@clerk/clerk-react'
 import { useMutation } from 'convex/react'
-import { PlusCircle } from 'lucide-react'
 // Convex
 import { api } from '~/convex/_generated/api'
 // Components
+import Icon from '~/components/icon'
 import { Button } from '~/components/ui/button'
-import { toast } from 'sonner'
 
 const Dashboard = () => {
   const { user } = useUser()
@@ -33,7 +33,7 @@ const Dashboard = () => {
         height={300}
       />
       <Image
-        className='hidden dark:block:'
+        className='dark:block hidden'
         src='/empty-dark.png'
         alt='Empty'
         width={300}
@@ -43,8 +43,8 @@ const Dashboard = () => {
         Welcome to {user?.firstName}'s Notion
       </p>
       <Button onClick={handleCreate}>
-        <PlusCircle className='h-5 w-5 mr-2' />
-        Create your first note
+        <Icon name='CirclePlus' size={16} className='mr-2' />
+        Create new note
       </Button>
     </div>
   )

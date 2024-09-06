@@ -80,7 +80,7 @@ const TrashBox = () => {
                 <button
                   title='Restore'
                   type='button'
-                  className='rounded-sm p-2 hover:bg-neutral-200'
+                  className='rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-700'
                   onClick={(e) => onRestore(e, doc._id)}
                 >
                   <Icon
@@ -91,7 +91,7 @@ const TrashBox = () => {
                 </button>
                 <ConfirmModal onConfirm={() => onRemove(doc._id)}>
                   <button
-                    className='rounded-sm p-2 hover:bg-neutral-200'
+                    className='rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-700'
                     title='Restore'
                     type='button'
                   >
