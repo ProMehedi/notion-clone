@@ -50,7 +50,9 @@ const DocumentList = ({ parenDocumentId, level = 0, data }: Props) => {
   }, [documents, parenDocumentId])
 
   const handleCreate = () => {
-    const promise = create({ title: 'Untitled' })
+    const promise = create({ title: 'Untitled' }).then((res) => {
+      router.push(`/documents/${res}`)
+    })
     toast.promise(promise, {
       loading: 'Creating new note...',
       success: 'new Note created successfully',
@@ -115,11 +117,7 @@ const DocumentList = ({ parenDocumentId, level = 0, data }: Props) => {
             onClick={() => onRedirect(doc._id)}
           />
           {expanded[doc._id] && (
-            <DocumentList
-              parenDocumentId={doc._id}
-              level={level + 1}
-              //   data={data}
-            />
+            <DocumentList parenDocumentId={doc._id} level={level + 1} />
           )}
         </div>
       ))}

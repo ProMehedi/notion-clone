@@ -66,7 +66,9 @@ const Item = ({ level = 0, ...props }: ItemProps) => {
     e.stopPropagation()
     if (!props.id) return
 
-    const promise = archive({ id: props.id })
+    const promise = archive({ id: props.id }).then(() => {
+      router.push('/documents')
+    })
     toast.promise(promise, {
       loading: 'Archiving note...',
       success: 'Note moved to trash',

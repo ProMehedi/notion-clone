@@ -117,7 +117,9 @@ const Navigation = () => {
   }
 
   const handleCreate = () => {
-    const promise = create({ title: 'Untitled' })
+    const promise = create({ title: 'Untitled' }).then((res) => {
+      router.push(`/documents/${res}`)
+    })
     toast.promise(promise, {
       loading: 'Creating a new note...',
       success: 'New Note created successfully',

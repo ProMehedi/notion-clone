@@ -4,6 +4,8 @@ import { useCreateBlockNote } from '@blocknote/react'
 import { BlockNoteView } from '@blocknote/mantine'
 import { useTheme } from 'next-themes'
 import '@blocknote/mantine/style.css'
+//
+import { useEdgeStore } from '~/lib/edgestore'
 
 interface Props {
   onChange: (value: string) => void
@@ -14,15 +16,24 @@ const Editor = ({ initialData, onChange }: Props) => {
   const [theme, setTheme] = React.useState<'light' | 'dark'>('light')
 
   const { resolvedTheme } = useTheme()
-  const editor = useCreateBlockNote({
-    initialContent: initialData ? JSON.parse(initialData) : undefined,
-  })
+  const { edgestore } = useEdgeStore()
 
   React.useEffect(() => {
     if (resolvedTheme) {
       setTheme(resolvedTheme === 'dark' ? 'dark' : 'light')
     }
   }, [resolvedTheme])
+
+  const handleUpload = async (file: File) => {
+    const res = await edgestore.publicFiles.upload({ file })
+
+    return res.url
+  }
+
+  const editor = useCreateBlockNote({
+    initialContent: initialData ? JSON.parse(initialData) : undefined,
+    uploadFile: handleUpload,
+  })
 
   return (
     <div>
