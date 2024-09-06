@@ -1,13 +1,14 @@
 'use client'
 import React from 'react'
 // Convex
-import { useQuery } from 'convex/react'
+import { useMutation, useQuery } from 'convex/react'
 import { api } from '~/convex/_generated/api'
 import { Id } from '~/convex/_generated/dataModel'
 // Components
 import Cover from '~/components/cover'
 import Toolbar from '~/components/toolbar'
 import { Skeleton } from '~/components/ui/skeleton'
+import Editor from '~/components/editor'
 
 interface Props {
   params: { docId: Id<'documents'> }
@@ -15,6 +16,11 @@ interface Props {
 
 const SingleDoc = ({ params }: Props) => {
   const document = useQuery(api.documents.getById, { id: params.docId })
+  const update = useMutation(api.documents.update)
+
+  const onContentChange = (content: string) => {
+    update({ id: params.docId, content })
+  }
 
   // Skeleton loading
   if (document == undefined) {
@@ -39,6 +45,7 @@ const SingleDoc = ({ params }: Props) => {
       <Cover url={document.coverImage} />
       <div className='md:max-w-3xl lg:max-w-4xl mx-auto'>
         <Toolbar initialData={document} />
+        <Editor onChange={onContentChange} initialData={document.content} />
       </div>
     </div>
   )
