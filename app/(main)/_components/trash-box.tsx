@@ -47,7 +47,7 @@ const TrashBox = () => {
       error: 'Failed to remove document',
     })
 
-    if (params.id === id) router.push('/')
+    if (params.docId === id) router.push('/')
   }
 
   if (documents === undefined) return <div>Loading...</div>
@@ -72,7 +72,7 @@ const TrashBox = () => {
           filterDocs.map((doc) => (
             <div
               key={doc._id}
-              className='group text-sm rounded-sm w-full hover:bg-primary/5 flex items-center justify-between'
+              className='group text-sm rounded-sm w-full hover:bg-primary/5 flex items-center justify-between cursor-pointer'
               onClick={() => router.push(`/documents/${doc._id}`)}
             >
               <span className='truncate pl-2'>{doc?.title}</span>
@@ -92,12 +92,12 @@ const TrashBox = () => {
                 <ConfirmModal onConfirm={() => onRemove(doc._id)}>
                   <button
                     className='rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-700'
-                    title='Restore'
+                    title='Delete'
                     type='button'
                   >
                     <Icon
                       className='text-muted-foreground'
-                      name='Trash'
+                      name='ArchiveX'
                       size={16}
                     />
                   </button>

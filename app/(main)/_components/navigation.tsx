@@ -170,7 +170,7 @@ const Navigation = () => {
           <DocumentList />
           <Popover>
             <PopoverTrigger className='w-full mt-4'>
-              <Item label='Trash' icon='Trash' />
+              <Item label='Trash' icon='ArchiveRestore' />
             </PopoverTrigger>
             <PopoverContent
               className='p-0 w-72'
