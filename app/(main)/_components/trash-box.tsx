@@ -9,6 +9,7 @@ import { Id } from '~/convex/_generated/dataModel'
 import Icon from '~/components/icon'
 import { Input } from '~/components/ui/input'
 import Link from 'next/link'
+import ConfirmModal from '~/components/modals/confirm-modal'
 
 const TrashBox = () => {
   const [search, setSearch] = React.useState('')
@@ -88,17 +89,19 @@ const TrashBox = () => {
                     size={16}
                   />
                 </button>
-                <button
-                  className='rounded-sm p-2 hover:bg-neutral-200'
-                  title='Restore'
-                  type='button'
-                >
-                  <Icon
-                    className='text-muted-foreground'
-                    name='Trash'
-                    size={16}
-                  />
-                </button>
+                <ConfirmModal onConfirm={() => onRemove(doc._id)}>
+                  <button
+                    className='rounded-sm p-2 hover:bg-neutral-200'
+                    title='Restore'
+                    type='button'
+                  >
+                    <Icon
+                      className='text-muted-foreground'
+                      name='Trash'
+                      size={16}
+                    />
+                  </button>
+                </ConfirmModal>
               </div>
             </div>
           ))}
