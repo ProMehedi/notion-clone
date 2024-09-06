@@ -45,7 +45,7 @@ const Title = ({ initialData }: Props) => {
       {isEditing ? (
         <Input
           ref={inputRef}
-          className='h-7 px-2 focus-visible:ring-transparent'
+          className='h-7 m-0 p-1 focus-visible:ring-transparent text-sm'
           value={title}
           onClick={enableInput}
           onChange={onChage}
@@ -56,7 +56,7 @@ const Title = ({ initialData }: Props) => {
         <Button
           variant='ghost'
           size='sm'
-          className='font-normal h-auto p-1'
+          className='font-normal h-7 text-sm p-1 m-0 hover:bg-transparent'
           onClick={enableInput}
         >
           <span className='truncate'>{initialData?.title}</span>
