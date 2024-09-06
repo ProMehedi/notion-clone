@@ -9,6 +9,7 @@ import { Id } from '~/convex/_generated/dataModel'
 import Icon from '~/components/icon'
 //
 import Title from './title'
+import Banner from './banner'
 
 interface Props {
   isCollapsed: boolean
@@ -50,6 +51,7 @@ const Navbar = ({ isCollapsed, onResetWidth }: Props) => {
           </div>
         )}
       </nav>
+      {document?.isArchived && <Banner docId={document._id} />}
     </>
   )
 }
