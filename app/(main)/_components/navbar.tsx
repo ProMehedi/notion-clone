@@ -11,6 +11,7 @@ import Icon from '~/components/icon'
 import Title from './title'
 import Banner from './banner'
 import Menu from './menu'
+import Publish from './publish'
 
 interface Props {
   isCollapsed: boolean
@@ -53,6 +54,7 @@ const Navbar = ({ isCollapsed, onResetWidth }: Props) => {
           <div className='flex items-center justify-between w-full'>
             <Title initialData={document} />
             <div className='flex items-center gap-x-2'>
+              <Publish initialData={document} />
               <Menu docId={document._id} />
             </div>
           </div>
