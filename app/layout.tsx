@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 //
+import { EdgeStoreProvider } from '~/lib/edgestore'
 import ThemeProvider from '~/providers/theme-provider'
 import ConvexClientProvider from '~/providers/convex-provider'
 import { Toaster } from '~/components/ui/sonner'
@@ -37,15 +38,17 @@ const RootLayout = ({
     <html lang='en' suppressContentEditableWarning>
       <body className={inter.className}>
         <ConvexClientProvider>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
-            enableSystem
-            storageKey='theme'
-          >
-            <Toaster richColors closeButton position='bottom-center' />
-            {children}
-          </ThemeProvider>
+          <EdgeStoreProvider>
+            <ThemeProvider
+              attribute='class'
+              defaultTheme='system'
+              enableSystem
+              storageKey='theme'
+            >
+              <Toaster richColors closeButton position='bottom-center' />
+              {children}
+            </ThemeProvider>
+          </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>
