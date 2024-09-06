@@ -20,12 +20,14 @@ import {
   PopoverTrigger,
 } from '~/components/ui/popover'
 import TrashBox from './trash-box'
+import { useSearch } from '~/hooks/use-search'
 
 const Navigation = () => {
   const path = usePathname()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const documents = useQuery(api.documents.getAll)
   const create = useMutation(api.documents.create)
+  const openSearchDialog = useSearch((state) => state.onOpen)
 
   const [isResetting, setIsResetting] = React.useState(false)
   const [isCollapsed, setIsCollapsed] = React.useState(isMobile)
@@ -145,7 +147,12 @@ const Navigation = () => {
 
         <div className=''>
           <UserItem />
-          <Item isSearch label='Search' icon='Search' onClick={() => {}} />
+          <Item
+            isSearch
+            label='Search'
+            icon='Search'
+            onClick={openSearchDialog}
+          />
           <Item label='Settings' icon='Settings' onClick={() => {}} />
           <Item label='New page' icon='CirclePlus' onClick={handleCreate} />
         </div>
