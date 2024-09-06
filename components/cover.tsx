@@ -8,8 +8,9 @@ import { useMutation } from 'convex/react'
 import { api } from '~/convex/_generated/api'
 import { Id } from '~/convex/_generated/dataModel'
 // Components
-import { useCoverImage } from '~/hooks/use-cover-image'
 import { cn } from '~/lib/utils'
+import { useEdgeStore } from '~/lib/edgestore'
+import { useCoverImage } from '~/hooks/use-cover-image'
 import { Button } from '~/components/ui/button'
 import Icon from '~/components/icon'
 
@@ -20,17 +21,24 @@ interface Props {
 
 const Cover = ({ url, preview }: Props) => {
   const { onOpen } = useCoverImage()
+  const { edgestore } = useEdgeStore()
   const params = useParams() as { docId: Id<'documents'> }
   const removeCoverImage = useMutation(api.documents.removeCoverImage)
 
-  const onRemove = () => {
-    const promise = removeCoverImage({ id: params.docId })
+  const onRemove = async () => {
+    if (!url) return
 
-    toast.promise(promise, {
-      loading: 'Removing cover image...',
-      success: 'Cover image removed',
-      error: 'Failed to remove cover image',
-    })
+    try {
+      toast.loading('Removing cover image...')
+      // Delete previous cover image from the server
+      await edgestore.publicFiles.delete({ url })
+      await removeCoverImage({ id: params.docId })
+
+      toast.dismiss()
+      toast.success('Cover image removed')
+    } catch (error) {
+      toast.error('Failed to remove cover image')
+    }
   }
 
   return (
