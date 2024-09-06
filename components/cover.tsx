@@ -88,6 +88,8 @@ const Cover = ({ url, preview }: Props) => {
   )
 }
 
-Cover.Skeleton = () => <Skeleton className='w-full h-[12vh]' />
+const Sk = () => <Skeleton className='w-full h-[12vh]' />
+Sk.displayName = 'Cover.Skeleton'
+Cover.Skeleton = Sk
 
 export default Cover

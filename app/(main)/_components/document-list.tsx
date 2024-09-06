@@ -78,9 +78,9 @@ const DocumentList = ({ parenDocumentId, level = 0, data }: Props) => {
     return (
       <div className='flex flex-col space-y-3 items-center p-3'>
         <p className='text-sm font-medium text-muted-foreground/80 text-center'>
-          You don't have any documents
+          You don&apos;t have any documents
           <br />
-          Let's create one!
+          Let&apos;s create one!
         </p>
         <Button className='ml-2' size='sm' onClick={handleCreate}>
           <Icon name='CirclePlus' className='h-4 mr-2' />

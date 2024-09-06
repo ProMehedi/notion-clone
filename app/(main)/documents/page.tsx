@@ -44,7 +44,7 @@ const Dashboard = () => {
         height={300}
       />
       <p className='text-lg font-medium'>
-        Welcome to {user?.firstName}'s Notion
+        Welcome to {user?.firstName}&apos;s Notion
       </p>
       <Button onClick={handleCreate}>
         <Icon name='CirclePlus' size={16} className='mr-2' />

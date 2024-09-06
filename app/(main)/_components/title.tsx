@@ -66,6 +66,8 @@ const Title = ({ initialData }: Props) => {
   )
 }
 
-Title.Skeleton = () => <Skeleton className='h-4 w-16 rounded-sm' />
+const Sk = () => <Skeleton className='h-4 w-16 rounded-sm' />
+Sk.displayName = 'Title.Skeleton'
+Title.Skeleton = Sk
 
 export default Title

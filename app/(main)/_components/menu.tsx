@@ -61,6 +61,8 @@ const Menu = ({ docId }: Props) => {
   )
 }
 
-Menu.Skeleton = () => <Skeleton className='w-4 h-2' />
+const Sk = () => <Skeleton className='w-4 h-2' />
+Sk.displayName = 'Menu.Skeleton'
+Menu.Skeleton = Sk
 
 export default Menu

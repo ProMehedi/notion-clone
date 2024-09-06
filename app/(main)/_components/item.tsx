@@ -163,7 +163,7 @@ const Item = ({ level = 0, ...props }: ItemProps) => {
 
 export default Item
 
-Item.Skeleton = ({ level }: { level?: number }) => {
+const Sk = ({ level }: { level?: number }) => {
   return (
     <div
       className={cn(
@@ -178,3 +178,6 @@ Item.Skeleton = ({ level }: { level?: number }) => {
     </div>
   )
 }
+
+Sk.displayName = 'Item.Skeleton'
+Item.Skeleton = Sk
