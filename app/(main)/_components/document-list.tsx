@@ -23,7 +23,7 @@ const DocumentList = ({ parenDocumentId, level = 0, data }: Props) => {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({})
   const [notFound, setNotFound] = React.useState(false)
 
-  const params = useParams()
+  const params: { docId: Id<'documents'> } = useParams()
   const router = useRouter()
 
   const create = useMutation(api.documents.create)
@@ -110,7 +110,7 @@ const DocumentList = ({ parenDocumentId, level = 0, data }: Props) => {
             label={doc.title}
             icon='FileText'
             documentIcon={doc.icon}
-            active={doc._id === params.id}
+            active={doc._id === params.docId}
             level={level}
             expanded={expanded[doc._id]}
             onExpand={() => onExpand(doc._id)}

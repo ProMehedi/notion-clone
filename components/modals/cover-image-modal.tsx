@@ -16,7 +16,9 @@ const CoverImageModal = () => {
   const [file, setFile] = React.useState<File>()
   const [isUploading, setIsUploading] = React.useState(false)
 
-  const params = useParams() as { docId: Id<'documents'> }
+  const params: { docId: Id<'documents'> } = useParams() as {
+    docId: Id<'documents'>
+  }
   const { edgestore } = useEdgeStore()
   const coverImage = useCoverImage()
   const update = useMutation(api.documents.update)

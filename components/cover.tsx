@@ -23,7 +23,9 @@ interface Props {
 const Cover = ({ url, preview }: Props) => {
   const { onReplace } = useCoverImage()
   const { edgestore } = useEdgeStore()
-  const params = useParams() as { docId: Id<'documents'> }
+  const params: { docId: Id<'documents'> } = useParams() as {
+    docId: Id<'documents'>
+  }
   const removeCoverImage = useMutation(api.documents.removeCoverImage)
 
   const onRemove = async () => {

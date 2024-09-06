@@ -15,7 +15,7 @@ const TrashBox = () => {
   const [search, setSearch] = React.useState('')
 
   const router = useRouter()
-  const params = useParams()
+  const params: { docId: Id<'documents'> } = useParams()
   const documents = useQuery(api.documents.getArchived)
   const restore = useMutation(api.documents.restore)
   const remove = useMutation(api.documents.remove)

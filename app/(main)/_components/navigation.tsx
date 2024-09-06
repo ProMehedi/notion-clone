@@ -4,8 +4,9 @@ import { toast } from 'sonner'
 import { useMediaQuery } from 'usehooks-ts'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 // Convex
-import { useQuery, useMutation } from 'convex/react'
+import { useMutation } from 'convex/react'
 import { api } from '~/convex/_generated/api'
+import { Id } from '~/convex/_generated/dataModel'
 //
 import { cn } from '~/lib/utils'
 import { useSearch } from '~/hooks/use-search'
@@ -25,7 +26,7 @@ import Navbar from './navbar'
 
 const Navigation = () => {
   const path = usePathname()
-  const params = useParams()
+  const params: { docId: Id<'documents'> } = useParams()
   const router = useRouter()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const create = useMutation(api.documents.create)
