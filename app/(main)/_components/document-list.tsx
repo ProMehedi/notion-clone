@@ -123,6 +123,10 @@ const DocumentList = ({ parenDocumentId, level = 0, data }: Props) => {
           )}
         </div>
       ))}
+
+      {parenDocumentId === undefined && (
+        <Item label='Add a page' icon='Plus' onClick={handleCreate} />
+      )}
     </>
   )
 }

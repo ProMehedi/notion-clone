@@ -26,7 +26,7 @@ interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   expanded?: boolean
   isSearch?: boolean
   level?: number
-  onClick: () => void
+  onClick?: () => void
   onExpand?: () => void
   label: string
   icon: keyof typeof icons
