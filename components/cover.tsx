@@ -12,6 +12,7 @@ import { cn } from '~/lib/utils'
 import { useEdgeStore } from '~/lib/edgestore'
 import { useCoverImage } from '~/hooks/use-cover-image'
 import { Button } from '~/components/ui/button'
+import { Skeleton } from '~/components/ui/skeleton'
 import Icon from '~/components/icon'
 
 interface Props {
@@ -84,5 +85,7 @@ const Cover = ({ url, preview }: Props) => {
     </div>
   )
 }
+
+Cover.Skeleton = () => <Skeleton className='w-full h-[12vh]' />
 
 export default Cover
